@@ -45,7 +45,7 @@ module.exports.session = {
   ***************************************************************************/
 
 adapter: 'redis',
-    url: 'redis://redistogo:90ff5b737230de3d2fa71a6cce4b83af@sculpin.redistogo.com:9437/'
+url: process.env.REDIS_URI
 
   /***************************************************************************
   *                                                                          *
