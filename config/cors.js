@@ -29,7 +29,8 @@
 module.exports.cors = {
     
     allRoutes: true,
-origin: 'http://localhost:3000,https://avogadro-autogestione.herokuapp.com/'
+origin: '*',
+    credentials: false
 
   /***************************************************************************
   *                                                                          *
