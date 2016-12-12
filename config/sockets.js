@@ -40,11 +40,8 @@ module.exports.sockets = {
   ***************************************************************************/
     
     adapter: 'socket.io-redis',
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
-    // ttl: <redis session TTL in seconds>,
-    db: process.env.REDIS_DB,
-    pass: process.env.REDIS_PASS,
+        url: 'redis://redistogo:90ff5b737230de3d2fa71a6cce4b83af@sculpin.redistogo.com:9437/'
+
   // adapter: 'memory',
 
   //

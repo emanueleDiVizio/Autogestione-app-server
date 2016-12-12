@@ -14,28 +14,28 @@
 
 module.exports.session = {
 
-    /***************************************************************************
+  /***************************************************************************
   *                                                                          *
   * Session secret is automatically generated when your new app is created   *
   * Replace at your own risk in production-- you will invalidate the cookies *
   * of your users, forcing them to log in again.                             *
   *                                                                          *
   ***************************************************************************/
-    secret: '326abaaf478ca923b02e2b7b47d0eff4',
+  secret: '326abaaf478ca923b02e2b7b47d0eff4',
 
 
-    /***************************************************************************
+  /***************************************************************************
   *                                                                          *
   * Set the session cookie expire time The maxAge is set by milliseconds,    *
   * the example below is for 24 hours                                        *
   *                                                                          *
   ***************************************************************************/
 
-    // cookie: {
-    //   maxAge: 24 * 60 * 60 * 1000
-    // },
+  // cookie: {
+  //   maxAge: 24 * 60 * 60 * 1000
+  // },
 
-    /***************************************************************************
+  /***************************************************************************
   *                                                                          *
   * Uncomment the following lines to set up a Redis session store that can   *
   * be shared across multiple Sails.js servers.                              *
@@ -44,9 +44,10 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-    adapter: 'redis',
+adapter: 'redis',
+    url: 'redis://redistogo:90ff5b737230de3d2fa71a6cce4b83af@sculpin.redistogo.com:9437/'
 
-    /***************************************************************************
+  /***************************************************************************
   *                                                                          *
   * The following values are optional, if no options are set a redis         *
   * instance running on localhost is expected. Read more about options at:   *
@@ -55,15 +56,15 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
-    // ttl: <redis session TTL in seconds>,
-    db: process.env.REDIS_DB,
-    pass: process.env.REDIS_PASS,
-    // prefix: 'sess:',
+  // host: 'localhost',
+  // port: 6379,
+  // ttl: <redis session TTL in seconds>,
+  // db: 0,
+  // pass: <redis auth password>,
+  // prefix: 'sess:',
 
 
-    /***************************************************************************
+  /***************************************************************************
   *                                                                          *
   * Uncomment the following lines to set up a MongoDB session store that can *
   * be shared across multiple Sails.js servers.                              *
@@ -74,10 +75,10 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-    // adapter: 'mongo',
-    // url: 'mongodb://user:password@localhost:27017/dbname', // user, password and port optional
+  // adapter: 'mongo',
+  // url: 'mongodb://user:password@localhost:27017/dbname', // user, password and port optional
 
-    /***************************************************************************
+  /***************************************************************************
   *                                                                          *
   * Optional Values:                                                         *
   *                                                                          *
@@ -89,12 +90,12 @@ module.exports.session = {
   *                                                                          *
   ***************************************************************************/
 
-    // collection: 'sessions',
-    // stringify: true,
-    // mongoOptions: {
-    //   server: {
-    //     ssl: true
-    //   }
-    // }
+  // collection: 'sessions',
+  // stringify: true,
+  // mongoOptions: {
+  //   server: {
+  //     ssl: true
+  //   }
+  // }
 
 };
