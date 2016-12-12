@@ -38,6 +38,13 @@ module.exports.sockets = {
   * via port 6379                                                            *
   *                                                                          *
   ***************************************************************************/
+    
+    adapter: 'socket.io-redis',
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    // ttl: <redis session TTL in seconds>,
+    db: process.env.REDIS_DB,
+    pass: process.env.REDIS_PASS,
   // adapter: 'memory',
 
   //
