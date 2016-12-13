@@ -100,7 +100,7 @@ module.exports = {
 	},
 	
 	getCoursesToJoin: function(userId, cb){
-		Course.find().populate("attendees").exec(function (err, courses){
+		Course.find().populate("attendees").populate("hosts").exec(function (err, courses){
 			cb(err, courses.filter(function(course){
 				return !_.contains(course.attendees.map(function (user) {
 					return user.id;
