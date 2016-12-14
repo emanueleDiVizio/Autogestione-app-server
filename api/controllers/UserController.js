@@ -40,10 +40,12 @@ module.exports = {
 	signup: function (req, res) {
 		
 		// Attempt to signup a user using the provided parameters
-		User.signup({
+		User.signUp({
 			name: req.param('name'),
 			surname: req.param('surname'),
-			class: req.param('class'),
+			year: req.param('year'),
+			section: req.param('section'),
+			building: req.param('building'),
 			email: req.param('email'),
 			password: req.param('password')
 		}, function (err, user) {
@@ -51,13 +53,33 @@ module.exports = {
 			// or some kind of unexpected server error, then call `res.badRequest()`
 			// or `res.serverError()` accordingly.
 			if (err) return res.negotiate(err);
-			
+			console.log(user)
 			// Go ahead and log this user in as well.
 			// We do this by "remembering" the user in the session.
 			// Subsequent requests from this user agent will have `req.session.me` set.
 			req.session.me = user.id;
 			
 			return res.json({success: true, message: 'Signup Successful.', user: user});
+			
+		});
+	},
+	
+	preRegister: function (req, res) {
+		
+		// Attempt to signup a user using the provided parameters
+		User.preRegister({
+			name: req.param('name'),
+			surname: req.param('surname'),
+			year: req.param('year'),
+			section: req.param('section'),
+			building: req.param('building'),
+		}, function (err, user) {
+			// res.negotiate() will determine if this is a validation error
+			// or some kind of unexpected server error, then call `res.badRequest()`
+			// or `res.serverError()` accordingly.
+			if (err) return res.negotiate(err);
+			
+			return res.json({success: true, message: 'PreRegister Successful.', user: user});
 			
 		});
 	},

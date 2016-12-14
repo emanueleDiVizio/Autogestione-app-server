@@ -32,6 +32,10 @@ module.exports = {
 			type: 'string',
 			required: true
 		},
+		building:{
+			type: 'string',
+			required: true
+		},
 		hosts: {
 			collection: 'user',
 			via: 'hostedCourses'
@@ -51,6 +55,7 @@ module.exports = {
 			endHour: inputs.endTime,
 			date: inputs.date,
 			room: inputs.room,
+			building: inputs.building,
 			attendees: inputs.attendees
 		}).exec(cb);
 	}

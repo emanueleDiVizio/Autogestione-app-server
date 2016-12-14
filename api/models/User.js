@@ -15,17 +15,23 @@ module.exports = {
 			type: 'string',
 			required: true
 		},
-		class: {
+		year: {
+			type: 'string',
+			required: true
+		},
+		section: {
+			type: 'string',
+			required: true
+		},
+		building: {
 			type: 'string',
 			required: true
 		},
 		email: {
-			type: 'email',
-			required: true
+			type: 'email'
 		},
 		password: {
-			type: 'string',
-			required: true
+			type: 'string'
 		},
 		hostedCourses: {
 			collection: 'course',
@@ -40,15 +46,26 @@ module.exports = {
 		
 	},
 	
-	signup: function (inputs, cb) {
+	preRegister: function (inputs, cb) {
+		//TODO: preregister and then register user
 		User.create({
 				name: inputs.name,
 				surname: inputs.surname,
-				class: inputs.class,
-				email: inputs.email,
-				password: inputs.password,
+				year: inputs.year,
+				section: inputs.section,
+				building: inputs.building
 			})
 			.exec(cb);
+	},
+	
+	signUp: function (inputs, cb) {
+		User.update( {
+			name: inputs.name,
+			surname: inputs.surname,
+			year: inputs.year,
+			section: inputs.section,
+			building: inputs.building
+		}, {email: inputs.email, password: inputs.password}).exec(cb);
 	},
 	
 	attemptLogin: function (inputs, cb) {
