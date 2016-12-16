@@ -30,7 +30,7 @@ module.exports.cors = {
     
     allRoutes: true,
 origin: '*',
-    credentials: false
+    credentials: true
 
   /***************************************************************************
   *                                                                          *
