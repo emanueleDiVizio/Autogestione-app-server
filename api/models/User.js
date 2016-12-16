@@ -103,7 +103,7 @@ module.exports = {
 				cb(err, [])
 			}
 			
-			cb(err, user.hostedCourses)
+			cb(err, user.hostedCourses.populate("attendees").populate("hosts"))
 		})
 	},
 	
@@ -114,7 +114,7 @@ module.exports = {
 				cb(err, [])
 			}
 			
-			cb(err, user.coursesEnrolledIn)
+			cb(err, user.coursesEnrolledIn.populate("attendees").populate("hosts"))
 		})
 	},
 	
