@@ -97,6 +97,7 @@ module.exports = {
 	},
 	
 	getHostedCourses: function (userId, cb) {
+		console.log(userId)
 		User.findOne(userId).populate('hostedCourses').exec(function (err, user) {
 			if(err){
 				cb(err, [])
@@ -107,7 +108,8 @@ module.exports = {
 	},
 	
 	getJoinedCourses: function (userId, cb) {
-		User.findOne(userId).populate('coursesEnrolledIn').exec(function (err, user) {
+        console.log(userId)
+        User.findOne(userId).populate('coursesEnrolledIn').exec(function (err, user) {
 			if(err){
 				cb(err, [])
 			}
