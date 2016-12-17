@@ -52,7 +52,10 @@ module.exports = {
 			// res.negotiate() will determine if this is a validation error
 			// or some kind of unexpected server error, then call `res.badRequest()`
 			// or `res.serverError()` accordingly.
-			if (err) return res.negotiate(err);
+			if (err) {
+				console.log(err)
+				return res.negotiate(err);
+            }
 			console.log(user)
 			// Go ahead and log this user in as well.
 			// We do this by "remembering" the user in the session.

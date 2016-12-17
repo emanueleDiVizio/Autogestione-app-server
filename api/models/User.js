@@ -97,23 +97,23 @@ module.exports = {
 	},
 	
 	getHostedCourses: function (userId, cb) {
-		User.findOne(userId).populate('hostedCourses').exec(function (err, user) {
-			if(err){
-				cb(err, [])
-			}
-			
-			cb(err, user.hostedCourses)
-		})
+        Course.find().populate("attendees").populate("hosts").exec(function (err, courses){
+            cb(err, courses.filter(function(course){
+                return _.contains(course.hosts.map(function (user) {
+                    return user.id;
+                }), userId)
+            }))
+        })
 	},
 	
 	getJoinedCourses: function (userId, cb) {
-		User.findOne(userId).populate('coursesEnrolledIn').exec(function (err, user) {
-			if(err){
-				cb(err, [])
-			}
-			
-			cb(err, user.coursesEnrolledIn)
-		})
+        Course.find().populate("attendees").populate("hosts").exec(function (err, courses){
+            cb(err, courses.filter(function(course){
+                return _.contains(course.attendees.map(function (user) {
+                    return user.id;
+                }), userId)
+            }))
+        })
 	},
 	
 	getCoursesToJoin: function(userId, cb){
