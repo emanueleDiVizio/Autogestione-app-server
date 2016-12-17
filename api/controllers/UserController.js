@@ -85,29 +85,29 @@ module.exports = {
 	},
 	
 	joinCourse: function (req, res) {
-		User.joinCourse(req.session.me, req.param('courseId'), function (err, user) {
+		User.joinCourse(req.param('userId'), req.param('courseId'), function (err, user) {
 			if (err) return res.negotiate(err);
 			
 			return res.json({
 				success: true,
-				message: 'Student: ' + req.session.me +  " enrolled in course " + req.param('courseId')
+				message: 'Student: ' + req.param('userId') +  " enrolled in course " + req.param('courseId')
 			})
 		})
 	},
 	
 	hostCourse: function (req, res) {
-		User.hostCourse(req.session.me, req.param('courseId'), function (err, user) {
+		User.hostCourse(req.param('userId'), req.param('courseId'), function (err, user) {
 			if (err) return res.negotiate(err);
 			
 			return res.json({
 				success: true,
-				message: 'Student: ' + req.session.me +  " is now hosting course " + req.param('courseId')
+				message: 'Student: ' + req.param('userId') +  " is now hosting course " + req.param('courseId')
 			})
 		})
 	},
 	
 	hostedCourses: function (req, res) {
-		User.getHostedCourses(req.session.me, function(err, courses){
+		User.getHostedCourses(req.param('userId'), function(err, courses){
 			if(err) return res.negotiate(err);
 			
 			return res.json({courses: courses})
@@ -115,7 +115,7 @@ module.exports = {
 	},
 	
 	joinedCourses: function (req, res) {
-		User.getJoinedCourses(req.session.me, function(err, courses){
+		User.getJoinedCourses(req.param('userId'), function(err, courses){
 			if(err) return res.negotiate(err);
 			
 			return res.json({courses: courses})
@@ -123,14 +123,14 @@ module.exports = {
 	},
 	
 	availableCoursesToJoin: function (req, res) {
-		User.getCoursesToJoin(req.session.me, function(err, courses){
+		User.getCoursesToJoin(req.param('userId'), function(err, courses){
 			if(err) return res.negotiate(err);
 			
 			return res.json({courses: courses})
 		})
 	},
 	availableCoursesToHost: function (req, res) {
-		User.getCoursesToHost(req.session.me, function(err, courses){
+		User.getCoursesToHost(req.param('userId'), function(err, courses){
 			if(err) return res.negotiate(err);
 			
 			return res.json({courses: courses})
