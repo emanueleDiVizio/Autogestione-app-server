@@ -21,7 +21,7 @@ module.exports = {
 			type: 'string'
 		},
 		email: {
-			type: 'email'
+			type: 'string'
 		},
 		password: {
 			type: 'string'
