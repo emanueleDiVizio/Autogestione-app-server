@@ -59,7 +59,6 @@ module.exports = {
 	},
 	
 	signUp: function (inputs, cb) {
-		console.log(inputs)
 		User.updateOrCreate({
 			where: {
 				name: inputs.name
@@ -92,7 +91,6 @@ module.exports = {
 	},
 	
 	hostCourseProm: function (userName, courseId) {
-		console.log(userName)
 		return User.findOrCreate({name: userName}).then(function (user) {
 			user.hostedCourses.add(courseId);
 			return user.save();
@@ -131,6 +129,7 @@ module.exports = {
 	
 	getCoursesToJoin: function (userId, cb) {
 		User.findOne(userId).exec(function(err, user){
+			console.log("User: " + userId + "obj: " + user)
 			Course.find({building: user.building}).populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
 				cb(err, courses.filter(function (course) {
 					return !_.contains(course.attendees.map(function (user) {

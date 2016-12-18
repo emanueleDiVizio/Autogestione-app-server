@@ -52,10 +52,8 @@ module.exports = {
 			// or some kind of unexpected server error, then call `res.badRequest()`
 			// or `res.serverError()` accordingly.
 			if (err) {
-				console.log(err)
 				return res.negotiate(err);
             }
-			console.log(user)
 			// Go ahead and log this user in as well.
 			// We do this by "remembering" the user in the session.
 			// Subsequent requests from this user agent will have `req.session.me` set.

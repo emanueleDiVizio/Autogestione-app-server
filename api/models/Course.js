@@ -82,7 +82,6 @@ module.exports = {
 						})
 					}).then(function (obj) {
 						return Promise.each(obj, function (obj) {
-							console.log(obj)
 							return User.hostCourseProm(obj.userName, obj.courseId)
 						})
 					})
