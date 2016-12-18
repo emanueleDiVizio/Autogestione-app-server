@@ -130,12 +130,16 @@ module.exports = {
 	},
 	
 	getCoursesToJoin: function (userId, cb) {
-		Course.find().populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
-			cb(err, courses.filter(function (course) {
-				return !_.contains(course.attendees.map(function (user) {
-					return user.id;
-				}), userId)
-			}))
+		User.findOne(userId).exec(function(err, user){
+			Course.find({building: user.building}).populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
+				cb(err, courses.filter(function (course) {
+					return !_.contains(course.attendees.map(function (user) {
+							return user.id;
+						}), userId) && !_.contains(course.attendees.map(function (user) {
+							return user.id;
+						}), userId)
+				}))
+			})
 		})
 	},
 	
