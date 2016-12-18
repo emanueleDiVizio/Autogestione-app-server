@@ -35,6 +35,11 @@ module.exports = {
 			collection: 'course',
 			via: 'attendees',
 			dominant: true
+		},
+		confirmedCourses: {
+			collection: 'course',
+			via: 'confirmedAttendees',
+			dominant: true,
 		}
 		
 	},
@@ -105,7 +110,7 @@ module.exports = {
 	},
 	
 	getHostedCourses: function (userId, cb) {
-		Course.find().populate("attendees").populate("hosts").exec(function (err, courses) {
+		Course.find().populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
 			cb(err, courses.filter(function (course) {
 				return _.contains(course.hosts.map(function (user) {
 					return user.id;
@@ -115,7 +120,7 @@ module.exports = {
 	},
 	
 	getJoinedCourses: function (userId, cb) {
-		Course.find().populate("attendees").populate("hosts").exec(function (err, courses) {
+		Course.find().populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
 			cb(err, courses.filter(function (course) {
 				return _.contains(course.attendees.map(function (user) {
 					return user.id;
@@ -125,7 +130,7 @@ module.exports = {
 	},
 	
 	getCoursesToJoin: function (userId, cb) {
-		Course.find().populate("attendees").populate("hosts").exec(function (err, courses) {
+		Course.find().populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
 			cb(err, courses.filter(function (course) {
 				return !_.contains(course.attendees.map(function (user) {
 					return user.id;

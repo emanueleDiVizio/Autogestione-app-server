@@ -137,6 +137,19 @@ module.exports = {
 			
 			return res.json({courses: courses})
 		})
+	},
+	
+	confirmAttendee: function (req, res) {
+		var userId = req.param("userId");
+		var courseId = req.param("courseId");
+		Course.confirmAttendee(userId, courseId, function (err, course) {
+			if (err) res.negotiate(err)
+			
+			res.json({
+				message: "User " + userId + "presence to course " + courseId + " confirmed.",
+				course: course
+			})
+		})
 	}
 	
 };

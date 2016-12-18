@@ -44,6 +44,10 @@ module.exports = {
 		attendees: {
 			collection: 'user',
 			via: 'coursesEnrolledIn'
+		},
+		confirmedAttendees: {
+			collection: 'user',
+			via: 'confirmedCourses'
 		}
 	},
 	
@@ -84,6 +88,19 @@ module.exports = {
 					})
 				})
 			})
+	},
+	
+	
+	confirmAttendee: function(userId, courseId, cb){
+		Course.findOne(courseId).exec(function(err, course){
+			if(err){
+				cb(err, course)
+			}
+			
+			course.confirmedAttendees.add(userId)
+			
+			course.save(cb)
+		})
 	},
 	
 	
