@@ -4,6 +4,7 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
+var Promise = require("bluebird");
 
 module.exports = {
 	
@@ -32,7 +33,7 @@ module.exports = {
 			type: 'string',
 			required: true
 		},
-		building:{
+		building: {
 			type: 'string',
 			required: true
 		},
@@ -47,17 +48,47 @@ module.exports = {
 	},
 	
 	
+	loadCourses: function (courses) {
+		return Promise.map(courses, function (course) {
+				return {
+					course: {
+						name: course.name,
+						description: course.description,
+						startHour: course.startHour,
+						endHour: course.endHour,
+						date: course.date,
+						room: course.room,
+						building: course.building
+					},
+					host: course.host
+				}
+			})
+			.reduce(function (total, course) {
+				total.courses.push(course.course);
+				total.hosts.push(course.host);
+				return total;
+			}, {courses: [], hosts: []})
+			.then(function (courseObj) {
+				return Course.create(courseObj.courses).then(function (courses) {
+					return Promise.map(courses, function (course) {
+						return course.id
+					}).then(function (ids) {
+						return _.zipWith(ids, courseObj.hosts, function (courseId, hostId) {
+							return {userName: hostId, courseId: courseId}
+						})
+					}).then(function (obj) {
+						return Promise.each(obj, function (obj) {
+							console.log(obj)
+							return User.hostCourseProm(obj.userName, obj.courseId)
+						})
+					})
+				})
+			})
+	},
+	
+	
 	createCourse: function (inputs, cb) {
-		Course.create({
-			description: inputs.description,
-			host: inputs.host,
-			startHour: inputs.startHour,
-			endHour: inputs.endTime,
-			date: inputs.date,
-			room: inputs.room,
-			building: inputs.building,
-			attendees: inputs.attendees
-		}).exec(cb);
+		Course.create().exec(cb);
 	}
 };
 

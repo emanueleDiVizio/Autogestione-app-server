@@ -11,21 +11,14 @@ module.exports = {
 			type: 'string',
 			required: true
 		},
-		surname: {
-			type: 'string',
-			required: true
-		},
 		year: {
-			type: 'string',
-			required: true
+			type: 'string'
 		},
 		section: {
-			type: 'string',
-			required: true
+			type: 'string'
 		},
 		building: {
-			type: 'string',
-			required: true
+			type: 'string'
 		},
 		email: {
 			type: 'email'
@@ -49,23 +42,30 @@ module.exports = {
 	preRegister: function (inputs, cb) {
 		//TODO: preregister and then register user
 		User.create({
-				name: inputs.name,
-				surname: inputs.surname,
-				year: inputs.year,
-				section: inputs.section,
-				building: inputs.building
+				name: inputs.name
 			})
 			.exec(cb);
 	},
+	preRegister: function (inputs) {
+		//TODO: preregister and then register user
+		return User.create({
+			name: inputs.name
+		});
+	},
 	
 	signUp: function (inputs, cb) {
-		User.update( {
+		console.log(inputs)
+		User.updateOrCreate({
+			where: {
+				name: inputs.name
+			}
+		}, {
 			name: inputs.name,
-			surname: inputs.surname,
+			email: inputs.email, password: inputs.password,
 			year: inputs.year,
 			section: inputs.section,
 			building: inputs.building
-		}, {email: inputs.email, password: inputs.password}).exec(cb);
+		}, cb);
 	},
 	
 	attemptLogin: function (inputs, cb) {
@@ -85,6 +85,14 @@ module.exports = {
 			user.save(cb)
 		})
 	},
+	
+	hostCourseProm: function (userName, courseId) {
+		console.log(userName)
+		return User.findOrCreate({name: userName}).then(function (user) {
+			user.hostedCourses.add(courseId);
+			return user.save();
+		})
+	},
 	joinCourse: function (userId, courseId, cb) {
 		User.findOne(userId).exec(function (err, user) {
 			if (err) {
@@ -97,28 +105,28 @@ module.exports = {
 	},
 	
 	getHostedCourses: function (userId, cb) {
-        Course.find().populate("attendees").populate("hosts").exec(function (err, courses){
-            cb(err, courses.filter(function(course){
-                return _.contains(course.hosts.map(function (user) {
-                    return user.id;
-                }), userId)
-            }))
-        })
+		Course.find().populate("attendees").populate("hosts").exec(function (err, courses) {
+			cb(err, courses.filter(function (course) {
+				return _.contains(course.hosts.map(function (user) {
+					return user.id;
+				}), userId)
+			}))
+		})
 	},
 	
 	getJoinedCourses: function (userId, cb) {
-        Course.find().populate("attendees").populate("hosts").exec(function (err, courses){
-            cb(err, courses.filter(function(course){
-                return _.contains(course.attendees.map(function (user) {
-                    return user.id;
-                }), userId)
-            }))
-        })
+		Course.find().populate("attendees").populate("hosts").exec(function (err, courses) {
+			cb(err, courses.filter(function (course) {
+				return _.contains(course.attendees.map(function (user) {
+					return user.id;
+				}), userId)
+			}))
+		})
 	},
 	
-	getCoursesToJoin: function(userId, cb){
-		Course.find().populate("attendees").populate("hosts").exec(function (err, courses){
-			cb(err, courses.filter(function(course){
+	getCoursesToJoin: function (userId, cb) {
+		Course.find().populate("attendees").populate("hosts").exec(function (err, courses) {
+			cb(err, courses.filter(function (course) {
 				return !_.contains(course.attendees.map(function (user) {
 					return user.id;
 				}), userId)
@@ -126,9 +134,9 @@ module.exports = {
 		})
 	},
 	
-	getCoursesToHost: function(userId, cb){
-		Course.find().populate("hosts").exec(function (err, courses){
-			cb(err, courses.filter(function(course){
+	getCoursesToHost: function (userId, cb) {
+		Course.find().populate("hosts").exec(function (err, courses) {
+			cb(err, courses.filter(function (course) {
 				return !_.contains(course.hosts.map(function (user) {
 					return user.id;
 				}), userId)

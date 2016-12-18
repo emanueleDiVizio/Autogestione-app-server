@@ -42,7 +42,6 @@ module.exports = {
 		// Attempt to signup a user using the provided parameters
 		User.signUp({
 			name: req.param('name'),
-			surname: req.param('surname'),
 			year: req.param('year'),
 			section: req.param('section'),
 			building: req.param('building'),
