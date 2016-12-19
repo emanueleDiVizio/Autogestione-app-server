@@ -23,8 +23,10 @@ var availableCourses = function(){
     if(mm<10) {
         mm='0'+mm
     }
+    
+    return "20/13/2016"
 
-    return dd+'/'+mm+'/'+yyyy;
+    // return dd+'/'+mm+'/'+yyyy;
 };
 
 module.exports = {
