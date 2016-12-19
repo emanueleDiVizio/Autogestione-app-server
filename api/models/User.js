@@ -11,7 +11,8 @@ var availableCourses = function(){
     var yyyy = today.getFullYear();
 
     if(today.getHours() > 14){
-        dd++
+        dd = dd+1;
+        console.log(dd)
     }
 
 
