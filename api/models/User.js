@@ -4,11 +4,16 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-var todayDate = function(){
+var availableCourses = function(){
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
+
+    if(today.getHours() > 14){
+        dd++
+    }
+
 
     if(dd<10) {
         dd='0'+dd
@@ -125,7 +130,7 @@ module.exports = {
 	},
 	
 	getHostedCourses: function (userId, cb) {
-		Course.find({date: todayDate()}).populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
+		Course.find({date: availableCourses()}).populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
 			cb(err, courses.filter(function (course) {
 				return _.contains(course.hosts.map(function (user) {
 					return user.id;
@@ -135,7 +140,7 @@ module.exports = {
 	},
 	
 	getJoinedCourses: function (userId, cb) {
-		Course.find({date: todayDate()}).populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
+		Course.find({date: availableCourses()}).populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
 			cb(err, courses.filter(function (course) {
 				return _.contains(course.attendees.map(function (user) {
 					return user.id;
@@ -147,7 +152,7 @@ module.exports = {
 	getCoursesToJoin: function (userId, cb) {
 		User.findOne(userId).exec(function(err, user){
 			console.log("User: " + userId + "obj: " + user)
-			Course.find({building: user.building, date: todayDate()}).populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
+			Course.find({building: user.building, date: availableCourses()}).populate("attendees").populate("hosts").populate("confirmedAttendees").exec(function (err, courses) {
 				cb(err, courses.filter(function (course) {
 					return !_.contains(course.attendees.map(function (user) {
 							return user.id;
