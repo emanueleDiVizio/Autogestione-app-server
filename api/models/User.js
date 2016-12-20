@@ -24,7 +24,7 @@ var availableCourses = function(){
         mm='0'+mm
     }
     
-    return "20/12/2016"
+    return "21/12/2016"
 
     // return dd+'/'+mm+'/'+yyyy;
 };
