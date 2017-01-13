@@ -1,3 +1,3 @@
 # avogadroAutoServer
 
-a [Sails](http://sailsjs.org) application
+A Sails.JS web server written to manage the student run courses in our school through the [WebApp](https://github.com/emanueleDiVizio/Autogestione-webApp). 
